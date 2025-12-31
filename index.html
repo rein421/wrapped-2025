@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wrapped 2025 💜</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
+
+        :root {
+            --purple: #b48cff;
+            --dark: #0b0614;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: radial-gradient(circle at top, #5e3b9d, var(--dark));
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* 🔐 PASSWORD SCREEN */
+        #lock {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle, #5e3b9d, #090411);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        #lock input {
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        #lock button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: var(--purple);
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* 🎧 PROGRESS BAR */
+        #progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: var(--purple);
+            width: 0%;
+            z-index: 100;
+        }
+
+        #musicBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--purple);
+            border: none;
+            padding: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 100;
+        }
+
+        #scrollTopBtn {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: var(--purple);
+            border: none;
+            padding: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 100;
+            display: none;
+        }
+
+        .section {
+            min-height: 100vh;
+            padding: 60px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .card {
+            max-width: 100%;
+            width: 100%;
+            padding: 35px;
+            border-radius: 30px;
+            background: linear-gradient(145deg, rgba(140,90,255,.25), rgba(0,0,0,.6));
+            box-shadow: 0 20px 50px rgba(0,0,0,.6);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .card:has(.photo-grid) {
+            padding: 0;
+            max-width: 95%;
+        }
+
+        h1 { color: var(--purple); font-size: 40px; }
+        h2 { color: #e6d8ff; }
+
+        .stat {
+            font-size: 26px;
+            margin: 15px 0;
+        }
+
+        /* 📸 PHOTOS */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        .photo {
+            background: rgba(255,255,255,.08);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(180,140,255,.3);
+            transition: transform 0.3s ease;
+        }
+        .photo:hover {
+            transform: scale(1.02);
+        }
+        .photo img {
+            width: 100%;
+            height: 75vh;
+            object-fit: cover;
+        }
+        .caption {
+            font-size: 18px;
+            padding: 20px;
+            font-weight: 600;
+            color: #e6d8ff;
+            background: rgba(0,0,0,0.5);
+        }
+
+        /* 💜 FLOATING HEART PARTICLES */
+        .particle {
+            position: fixed;
+            bottom: -30px;
+            font-size: 18px;
+            opacity: 0.85;
+            animation: rise 8s linear forwards;
+            pointer-events: none;
+            z-index: 50;
+            text-shadow: 0 0 12px rgba(180,140,255,0.8);
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(-120vh) scale(1.4); opacity: 0; }
+        }
+
+        .sparkle {
+            position: absolute;
+            pointer-events: none;
+            font-size: 10px;
+            animation: fadeOut 1s forwards;
+            z-index: 1000;
+        }
+        @keyframes fadeOut {
+            to { opacity: 0; transform: translateY(-20px) scale(1.5); }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="progress"></div>
+
+    <audio id="bgm" loop>
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="lock">
+        <h2 style="color: var(--purple); margin-bottom: 5px;">💜 Enter Access Code</h2>
+        <input type="password" id="pass" placeholder="Hint: Her name">
+        <button onclick="unlock()">Enter</button>
+    </div>
+
+    <button id="musicBtn" onclick="toggleMusic()">🎵</button>
+    <button id="scrollTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+
+    <!-- 🎧 INTRO -->
+    <div class="section">
+        <div class="card">
+            <h1>🎧 2025 WRAPPED</h1>
+            <h2>A little gift for you baby</h2>
+            <p>Every memory with <b>Liya 💜</b></p>
+        </div>
+    </div>
+
+    <!-- 📊 STATS -->
+    <div class="section">
+        <div class="card">
+            <h2>🔥 Top Moments</h2>
+            <div class="stat">💬 Uncountable late-night talks</div>
+            <div class="stat">📸 Many photos taken</div>
+            <div class="stat">😂 Infinity laughs</div>
+            <div class="stat">💜 1 person Liya</div>
+        </div>
+    </div>
+
+    <!-- 📅 MONTHS -->
+    <div class="section">
+        <div class="card">
+            <h2>💕 That First Moment</h2>
+            <p>When you walked in, everything changed. I knew right then that you were going to be my favorite person.</p>
+            <div class="photo-grid">
+                <div class="photo">
+                    <img src="photos/jan1.jpg">
+                    <div class="caption">I love you for eternity baby</div>
+                </div>
+            </div>
+            <video muted controls data-scroll-video style="width: 100%; height: 400px; border-radius: 15px; margin-top: 20px;">
+                <source src="videos/vid1.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="card">
+            <h2>💚 Your Smile</h2>
+            <p>That smile of yours makes my heart skip a beat every single time. You don't even realize how beautiful you are.</p>
+            <div class="photo-grid">
+                <div class="photo">
+                    <img src="photos/feb1.jpg">
+                    <div class="caption">Beautiful you</div>
+                </div>
+            </div>
+            <video muted controls data-scroll-video style="width: 100%; height: 400px; border-radius: 15px; margin-top: 20px;">
+                <source src="videos/vid2.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="card">
+            <h2>🌺 Natural Beauty</h2>
+            <p>You're stunning without even trying. The way you laugh, the way you look at me I'm completely mesmerized.</p>
+            <div class="photo-grid">
+                <div class="photo">
+                    <img src="photos/mar1.jpg">
+                    <div class="caption">Natural beauty</div>
+                </div>
+            </div>
+            <video muted controls data-scroll-video style="width: 100%; height: 400px; border-radius: 15px; margin-top: 20px;">
+                <source src="videos/vid3.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="card">
+            <h2>🌼 Reflections</h2>
+            <p>Looking at you, I see my future. Every moment with you feels like home.</p>
+            <div class="photo-grid">
+                <div class="photo">
+                    <img src="photos/apr1.jpg">
+                    <div class="caption">Mirror selfie yarnn </div>
+                </div>
+            </div>
+            <video muted controls data-scroll-video style="width: 100%; height: 400px; border-radius: 15px; margin-top: 20px;">
+                <source src="videos/vid4.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="card">
+            <h2>💛 Just Us</h2>
+            <p>In a world full of people, you're the only one I want to hold. These moments with you are everything.</p>
+            <div class="photo-grid">
+                <div class="photo">
+                    <img src="photos/may1.jpg">
+                    <div class="caption">Just us two</div>
+                </div>
+            </div>
+            <video muted controls data-scroll-video style="width: 100%; height: 400px; border-radius: 15px; margin-top: 20px;">
+                <source src="videos/vid5.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="card">
+            <h2>🌞 My Happy Place</h2>
+            <p>Anywhere with you is my happy place. You make everything brighter, warmer, better.</p>
+            <div class="photo-grid">
+                <div class="photo">
+                    <img src="photos/jun1.jpg">
+                    <div class="caption">Happy together</div>
+                </div>
+            </div>
+            <video muted controls data-scroll-video style="width: 100%; height: 400px; border-radius: 15px; margin-top: 20px;">
+                <source src="videos/vid6.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="card">
+            <h2>😂 Pure Joy</h2>
+            <p>Your laugh is contagious. Every silly moment, every inside joke I treasure all of it.</p>
+            <div class="photo-grid">
+                <div class="photo">
+                    <img src="photos/jul1.jpg">
+                    <div class="caption">Laughing with you</div>
+                </div>
+            </div>
+            <video muted controls data-scroll-video style="width: 100%; height: 400px; border-radius: 15px; margin-top: 20px;">
+                <source src="videos/vid7.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="card">
+            <h2>🌟 Golden Heart</h2>
+            <p>You have the kindest heart. The way you care, the way you love—it inspires me every day.</p>
+            <div class="photo-grid">
+                <div class="photo">
+                    <img src="photos/aug1.jpg">
+                    <div class="caption">Golden moments</div>
+                </div>
+            </div>
+            <video muted controls data-scroll-video style="width: 100%; height: 400px; border-radius: 15px; margin-top: 20px;">
+                <source src="videos/vid8.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="card">
+            <h2>🍂 Forever Real</h2>
+            <p>Through everything, you're my constant. You're my person, my anchor, my love.</p>
+            <div class="photo-grid">
+                <div class="photo">
+                    <img src="photos/sep1.jpg">
+                    <div class="caption">Always beautiful</div>
+                </div>
+            </div>
+            <video muted controls data-scroll-video style="width: 100%; height: 400px; border-radius: 15px; margin-top: 20px;">
+                <source src="videos/vid9.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="card">
+            <h2> Favorite Season</h2>
+            <p>Every day with you feels like celebration. You make ordinary moments into memories I'll cherish forever.</p>
+            <div class="photo-grid">
+                <div class="photo">
+                    <img src="photos/oct1.jpg">
+                    <div class="caption">My Favorite Person I love you always my Liya 💜 </div>
+                </div>
+            </div>
+            <video muted controls data-scroll-video style="width: 100%; height: 400px; border-radius: 15px; margin-top: 20px;">
+                <source src="videos/vid10.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <!-- 🎁 FINAL -->
+    <div class="section">
+        <div class="card">
+            <h1>💜 2025 COMPLETE</h1>
+            <p>
+                I love you my Liya, my forever duo in life. Always thankful that I met you, You always make me feel na mahal na mahal mo ako. Maraming salamat baby Enjoy poo mwuaaa. Grabe baby matatapos na natin tong taon na to tayo padin I wish us all the best magiging succesful din tayo someday and we will achieve lahat nang pangarap natin lahat nang pangarap nang magulang natin, masusuklian din natin sila baby, and for us we will see each other na palagi hindi na tayo mabibitin palagi pag mag uuwian na wala nang goodbye kiss na pag katagal tagal bago pa mag kita ulit, and sabay na tayo babalik dyan sa pangasinan tayo naman ang mag papa christmas party dyan, tayo naman mag b-baguio together or mas better pa out of the country yun langg makakaya natin lahat to, iba ka sa kanila iba ka napaka swerte ko nung natagpuan kita hindi ako makapaniwala na naging sakin ka baby lahat na nasayo napakabait mo, bonus na ngalang sakin na sobrang pretty mo pa ang lupit talaga nang tadhana grabeng plot twist to, nabigla talaga ako kasi ikaw yung nakilala ko ih, I love you Marecris sa mga susunod na taon di na natin ma-mamalayan na sinusuotan na kita nang ring, Godspeed for us baby, mwuaaa I love youu po ulit baby ko Happy New Year again baby enjoy poo! <br><br>
+                <b>Thank you, Liya 💜</b>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const bgm = document.getElementById("bgm");
+        const lock = document.getElementById("lock");
+        const pass = document.getElementById("pass");
+        const scrollTopBtn = document.getElementById("scrollTopBtn");
+        const progress = document.getElementById("progress");
+
+        /* 💜 HEART GENERATOR */
+        setInterval(() => {
+            const heart = document.createElement("div");
+            heart.className = "particle";
+            heart.innerText = "💜";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = Math.random() * 20 + 14 + "px";
+            heart.style.animationDuration = Math.random() * 4 + 6 + "s";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 10000);
+        }, 400);
+
+        /* ✨ SPARKLE EFFECT */
+        document.addEventListener('mousemove', (e) => {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = e.pageX + 'px';
+            sparkle.style.top = e.pageY + 'px';
+            sparkle.innerHTML = '✨';
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 1000);
+        });
+
+        /* 🔐 UNLOCK */
+        function unlock() {
+            if (pass.value.toLowerCase() === "cris") {
+                lock.style.display = "none";
+                bgm.volume = 0.7;
+                bgm.play().catch(e => console.log("Music error:", e));
+            } else {
+                alert("Wrong access code!");
+            }
+        }
+
+        /* 🎵 TOGGLE */
+        function toggleMusic() {
+            if (bgm.paused) bgm.play();
+            else bgm.pause();
+        }
+
+        /* 📊 SCROLL LOGIC */
+        window.addEventListener("scroll", () => {
+            const p = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            progress.style.width = p + "%";
+            
+            if (window.scrollY > 300) scrollTopBtn.style.display = "block";
+            else scrollTopBtn.style.display = "none";
+        });
+
+        /* 🎞 AUTO PLAY VIDEO */
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                const v = entry.target;
+                if (entry.isIntersecting) {
+                    v.play().catch(() => {});
+                } else {
+                    v.pause();
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll("[data-scroll-video]").forEach(v => observer.observe(v));
+    </script>
+
+</body>
+</html>
